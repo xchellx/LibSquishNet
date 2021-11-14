@@ -2,7 +2,7 @@
 
 This fork has ported changes from https://github.com/AxioDL/libSquish
 
-A partial port of Simon Brown's v1.11 libsquish to .NET Framework 4.6
+A partial port of Simon Brown's v1.11 libsquish to .NET Standard 2.0
 
 Original project is available here https://code.google.com/p/libsquish/
 
