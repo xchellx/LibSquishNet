@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31229.75
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibSquishNet", "LibSquishNet\LibSquishNet.csproj", "{8B187D46-BC8E-4B5A-AE68-326958BC9AAA}"
 EndProject
@@ -26,6 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {FEA4876C-8F5D-4151-8F4F-138239666497}
+		SolutionGuid = {C5959B7E-FEB1-4697-8E40-39AC3129EEC2}
 	EndGlobalSection
 EndGlobal

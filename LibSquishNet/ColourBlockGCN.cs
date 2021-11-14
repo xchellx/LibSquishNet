@@ -177,7 +177,6 @@ namespace Squish
                 else
                 {
                     // GCN: 3/8 blend rather than 1/3
-                    // TODO: This
                     codes[8 + i] = (byte)((c * 5 + d * 3) >> 3);
                     codes[12 + i] = (byte)((c * 3 + d * 5) >> 3);
                 }
