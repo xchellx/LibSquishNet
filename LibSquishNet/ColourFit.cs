@@ -14,7 +14,7 @@
 
         public void Compress(byte[] block, int offset)
         {
-            bool isDxt1 = Flags.HasFlag(SquishFlags.kDxt1);
+            bool isDxt1 = Flags.HasFlag(SquishFlags.kDxt1) || Flags.HasFlag(SquishFlags.kDxt1GCN);
 
             if (isDxt1)
             {

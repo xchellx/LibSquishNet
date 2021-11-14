@@ -18,7 +18,7 @@ namespace Squish
         public ColourSet(byte[] rgba, int mask, SquishFlags flags)
         {
             // check the compression mode for dxt1
-            bool isDxt1 = flags.HasFlag(SquishFlags.kDxt1);
+            bool isDxt1 = flags.HasFlag(SquishFlags.kDxt1) || flags.HasFlag(SquishFlags.kDxt1GCN);
             bool weightByAlpha = flags.HasFlag(SquishFlags.kWeightColourByAlpha);
 
             // create the minimal set

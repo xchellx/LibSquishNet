@@ -15,6 +15,9 @@ namespace Squish
         //! Use DXT5 compression.
         kDxt5 = 4,
 
+        //! Use DXT1 compression with GCN byte-ordering
+        kDxt1GCN = 512,
+
         //! Use a very slow but very high quality colour compressor.
         kColourIterativeClusterFit = 256,
 
@@ -33,12 +36,12 @@ namespace Squish
         private static SquishFlags fixFlags(SquishFlags flags)
         {
             // grab the flag bits
-            SquishFlags method = flags & (SquishFlags.kDxt1 | SquishFlags.kDxt3 | SquishFlags.kDxt5);
+            SquishFlags method = flags & (SquishFlags.kDxt1 | SquishFlags.kDxt3 | SquishFlags.kDxt5 | SquishFlags.kDxt1GCN);
             SquishFlags fit = flags & (SquishFlags.kColourIterativeClusterFit | SquishFlags.kColourClusterFit | SquishFlags.kColourRangeFit);
             SquishFlags extra = flags & SquishFlags.kWeightColourByAlpha;
 
             // set defaults
-            if (method != SquishFlags.kDxt3 && method != SquishFlags.kDxt5) { method = SquishFlags.kDxt1; }
+            if (method != SquishFlags.kDxt3 && method != SquishFlags.kDxt5 && method != SquishFlags.kDxt1GCN) { method = SquishFlags.kDxt1; }
             if (fit != SquishFlags.kColourRangeFit && fit != SquishFlags.kColourIterativeClusterFit) { fit = SquishFlags.kColourClusterFit; }
 
             // done
@@ -52,7 +55,7 @@ namespace Squish
 
             // compute the storage requirements
             int blockcount = (width + 3) / 4 * ((height + 3) / 4);
-            int blocksize = flags.HasFlag(SquishFlags.kDxt1) ? 8 : 16;
+            int blocksize = flags.HasFlag(SquishFlags.kDxt1) || flags.HasFlag(SquishFlags.kDxt1GCN) ? 8 : 16;
 
             return blockcount * blocksize;
         }
@@ -64,7 +67,7 @@ namespace Squish
 
             // initialise the block input
             int sourceBlock = 0;
-            int bytesPerBlock = flags.HasFlag(SquishFlags.kDxt1) ? 8 : 16;
+            int bytesPerBlock = flags.HasFlag(SquishFlags.kDxt1) || flags.HasFlag(SquishFlags.kDxt1GCN) ? 8 : 16;
 
             // loop over blocks
             for (int y = 0; y < height; y += 4)
@@ -124,7 +127,10 @@ namespace Squish
             if (flags.HasFlag(SquishFlags.kDxt3) | flags.HasFlag(SquishFlags.kDxt5)) { colourBlock += 8; }
 
             // decompress colour
-            ColourBlock.DecompressColour(rgba, block, colourBlock, flags.HasFlag(SquishFlags.kDxt1));
+            if (flags.HasFlag(SquishFlags.kDxt1GCN))
+                ColourBlockGCN.DecompressColourGCN(rgba, block, colourBlock);
+            else
+                ColourBlock.DecompressColour(rgba, block, colourBlock, flags.HasFlag(SquishFlags.kDxt1));
 
             // decompress alpha separately if necessary
             if (flags.HasFlag(SquishFlags.kDxt3))
@@ -145,7 +151,7 @@ namespace Squish
 
             // initialise the block output
             int targetBlock = 0;
-            int bytesPerBlock = flags.HasFlag(SquishFlags.kDxt1) ? 8 : 16;
+            int bytesPerBlock = flags.HasFlag(SquishFlags.kDxt1) || flags.HasFlag(SquishFlags.kDxt1GCN) ? 8 : 16;
 
             if (parallel)
             {

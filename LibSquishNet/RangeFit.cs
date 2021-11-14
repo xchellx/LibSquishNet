@@ -122,7 +122,10 @@ namespace Squish
                 Colours.RemapIndices(closest, indices);
 
                 // save the block
-                ColourBlock.WriteColourBlock3(m_start, m_end, indices, block, offset);
+                if (Flags.HasFlag(SquishFlags.kDxt1GCN))
+                    ColourBlockGCN.WriteColourBlock3GCN(m_start, m_end, indices, block, offset);
+                else
+                    ColourBlock.WriteColourBlock3(m_start, m_end, indices, block, offset);
 
                 // save the error
                 m_besterror = error;

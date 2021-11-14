@@ -242,7 +242,10 @@ namespace Squish
                 Colours.RemapIndices(unordered, bestindices);
 
                 // save the block
-                ColourBlock.WriteColourBlock3(beststart.ToVector3(), bestend.ToVector3(), bestindices, block, offset);
+                if (Flags.HasFlag(SquishFlags.kDxt1GCN))
+                    ColourBlockGCN.WriteColourBlock3GCN(beststart.ToVector3(), bestend.ToVector3(), bestindices, block, offset);
+                else
+                    ColourBlock.WriteColourBlock3(beststart.ToVector3(), bestend.ToVector3(), bestindices, block, offset);
 
                 // save the error
                 BestError = besterror;
@@ -392,7 +395,10 @@ namespace Squish
                 Colours.RemapIndices(unordered, bestindices);
 
                 // save the block
-                ColourBlock.WriteColourBlock4(beststart.ToVector3(), bestend.ToVector3(), bestindices, block, offset);
+                if (Flags.HasFlag(SquishFlags.kDxt1GCN))
+                    ColourBlockGCN.WriteColourBlock4GCN(beststart.ToVector3(), bestend.ToVector3(), bestindices, block, offset);
+                else
+                    ColourBlock.WriteColourBlock4(beststart.ToVector3(), bestend.ToVector3(), bestindices, block, offset);
 
                 // save the error
                 BestError = besterror;

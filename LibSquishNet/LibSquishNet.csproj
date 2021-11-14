@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClusterFit.cs" />
+    <Compile Include="ColourBlockGCN.cs" />
     <Compile Include="ColourBlock.cs" />
     <Compile Include="ColourFit.cs" />
     <Compile Include="ColourSet.cs" />
